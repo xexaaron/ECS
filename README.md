@@ -70,7 +70,7 @@
          struct MyOtherComponent {
             float foo = 0.5f;
             char c = '/';
-         }
+         };
 
          // Create an entity      
          for (size_t i = 0; i < 100; ++i) {
@@ -91,13 +91,13 @@
             }
          }
          // View entities that have MyComponent
-         Abyss::View<Abyss::Entity> view   = Abyss::ECS::View<MyComponent>();
+         Abyss::View<Abyss::Entity> view       = Abyss::ECS::View<MyComponent>();
          // View entities that have MyComponent AND int components.
-         Abyss::View<Abyss::Entity> view_2 = Abyss::ECS::View<MyComponent, int>(); 
+         Abyss::View<Abyss::Entity> view_2     = Abyss::ECS::View<MyComponent, int>(); 
          // view entities that have MyOtherComponent
-         Abyss::View<Entity> other_view    = Abyss::ECS::View<MyOtherComponent>();
+         Abyss::View<Abyss::Entity> other_view = Abyss::ECS::View<MyOtherComponent>();
          // group entites that have either MyComponent OR MyOtherComponent.
-         Abyss::View<Entity> group         = Abyss::ECS::Group<MyComponent, MyOtherComponent>();
+         Abyss::View<Abyss::Entity> group      = Abyss::ECS::Group<MyComponent, MyOtherComponent>();
          // Loop over the ECS using begin and end. Perferred over ECS::View().
          for (auto entity : Abyss::ECS()) {}  
          // Loop over a view of the entire ECS      
