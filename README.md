@@ -11,27 +11,32 @@
 
 
 ### Compilation Flags & Values
-   * #### Compilation flags can be found at the top of [ECS.h](Source/ECS.h#L17).
+   * #### Compilation flags can be found at the top of [ECS.h](Source/ECS.h#L16).
 
    * ```cpp    
       #undef ECS_USE_64_BIT_HANDLES       // Use 64 bit identifiers for entities instead of 32 bit.
       ```     
    * ```cpp    
-      #undef ECS_NO_LOG                   // Turn off logging for the ecs entirely (including errors).
+      #undef ECS_NO_LOG                   // Turn off logging for the ecs entirely 
+                                          // (including errors).
       ```   
    * ```cpp    
-      #undef ECS_NO_ASSERT                // Turn off asserts in debug builds. (in release it is off by default).
+      #undef ECS_NO_ASSERT                // Turn off asserts in debug builds. 
+                                          // (in release it is off by default).
       ```   
    * ```cpp    
-      #undef ECS_USE_FN_COMP_DESTRUCTION  // Destroy components using a stack of functions rather than a vector unique_ptr registries.
+      #undef ECS_USE_FN_COMP_DESTRUCTION  // Destroy components using a stack of functions rather
+                                          // than a vector unique_ptr registries.
       ```      
    * ```cpp
-      #define ECS_MAX_COMPONENT_TYPES 128 // The maximum number of unique component types. (this will determine the size of the bitset used for checking if an entity has a component).
+      #define ECS_MAX_COMPONENT_TYPES 128 // The maximum number of unique component types.
+                                          // (this will determine the size of the bitset
+                                          // used for checking if an entity has a component).
       ```
       
 ## Common language
 
-### A uint32_t or uint64_t value depending on [compilation flags](Source/ECS.h#L31).
+### A uint32_t or uint64_t value depending on [compilation flags](Source/ECS.h#L30).
 
  * ```cpp    
     typename Abyss::Handle 
@@ -56,8 +61,6 @@
       #include "ECS.h"
       
       int main() {
-         using namespace Abyss;
-
          struct MyComponent {
             float foo = 0.5f;
             double bar = 5.5; 
@@ -71,7 +74,7 @@
 
          // Create an entity      
          for (size_t i = 0; i < 100; ++i) {
-            Entity entity = ECS::Create();
+            Abyss::Entity entity = Abyss::ECS::Create();
             if (i % 2 == 0) {
                // Add a component to it. Only one Component per Component Type allowed.
                entity.AddComponent<MyComponent>();
@@ -87,23 +90,27 @@
                my_comp.c = 'b';
             }
          }
-         View<Entity> view   = ECS::View<MyComponent>();      // View entities that have MyComponent
-         View<Entity> view_2 = ECS::View<MyComponent, int>(); // View entities that have MyComponent AND int components.
-
-         View<Entity> other_view = ECS::View<MyOtherComponent>(); // view entities that have MyOtherComponent
-         View<Entity> group = ECS::Group<MyComponent, MyOtherComponent>(); // group entites that have either MyComponent OR MyOtherComponent.
-
-         for (auto entity : ECS()) {}       // Loop over the ECS using begin and end. Perferred over ECS::View().
-         for (auto entity : ECS::View()) {} // Loop over a view of the entire ECS 
-
-         ECS::Clear(); // Clear the ecs if desired.
+         // View entities that have MyComponent
+         Abyss::View<Abyss::Entity> view   = Abyss::ECS::View<MyComponent>();
+         // View entities that have MyComponent AND int components.
+         Abyss::View<Abyss::Entity> view_2 = Abyss::ECS::View<MyComponent, int>(); 
+         // view entities that have MyOtherComponent
+         Abyss::View<Entity> other_view    = Abyss::ECS::View<MyOtherComponent>();
+         // group entites that have either MyComponent OR MyOtherComponent.
+         Abyss::View<Entity> group         = Abyss::ECS::Group<MyComponent, MyOtherComponent>();
+         // Loop over the ECS using begin and end. Perferred over ECS::View().
+         for (auto entity : Abyss::ECS()) {}  
+         // Loop over a view of the entire ECS      
+         for (auto entity : Abyss::ECS::View()) {} 
+         // Clear the ecs if desired.
+         Abyss::ECS::Clear(); 
       }
 
    ```
 
-### [Logging](./Source/ECS.h#L156) 
+### [Logging](./Source/ECS.h#L155) 
    * #### Mostly for debug purposed as asserts are used in place of errors.
-   * #### Here is the [default Logger](./Source/ECS.h#L181) implementation used by the ECS.
+   * #### Here is the [default Logger](./Source/ECS.h#L180) implementation used by the ECS.
 
    ```cpp
       class DefaultLogger final : public ILogger {

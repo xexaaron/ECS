@@ -1,7 +1,6 @@
 #pragma once
 
 #include <unordered_map>
-#include <stack>
 #include <bitset>
 #include <span>
 #include <type_traits>
@@ -19,7 +18,7 @@
 #undef  ECS_NO_ASSERT               // Turn off asserts in debug builds. (in release it is off by default).
 #undef  ECS_USE_FN_COMP_DESTRUCTION // Destroy components using a stack of functions rather than unique_ptrs.
 
-#define ECS_MAX_COMPONENT_TYPES 128     // The maximum number of unique component types.
+#define ECS_MAX_COMPONENT_TYPES 128 // The maximum number of unique component types.
 
 #pragma region Macros
 #ifdef ECS_USE_64_BIT_HANDLES
